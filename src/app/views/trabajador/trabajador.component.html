@@ -1,0 +1,17 @@
+<div class="trabajador-container">
+    <h1>Bienvenido, {{ trabajador.nombre }}</h1>
+    <p>Profesión: {{ trabajador.profesion }}</p>
+    <p>Edad: {{ trabajador.edad }}</p>
+    <p>Comentario: {{ trabajador.comentario }}</p>
+  
+    <!-- Botón para redirigir al componente de edición -->
+    <button (click)="irAEditarPerfil()">Editar Perfil</button>
+  
+    <!-- Navegación -->
+    <nav>
+      <ul>
+        <li><a (click)="irAGestionarMenu()">Gestionar Menú</a></li>
+        <li><a (click)="irAListarPedidos()">Listar Pedidos</a></li>
+      </ul>
+    </nav>
+  </div>

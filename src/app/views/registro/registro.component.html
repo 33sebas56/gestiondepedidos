@@ -1,0 +1,21 @@
+<div class="auth-container">
+  < <h1>Registro</h1>
+  <form>
+    <label for="username">Usuario:</label>
+    <input [(ngModel)]="username" type="text" id="username" name="username" required />
+    
+    <label for="password">Contraseña:</label>
+    <input [(ngModel)]="password" type="password" id="password" name="password" required />
+
+    <label for="role">Tipo de Usuario:</label>
+    <select [(ngModel)]="role" id="role" name="role">
+      <option value="usuario">Usuario</option>
+      <option value="trabajador">Trabajador</option>
+    </select>
+
+    <button type="button" (click)="registrarse()">Registrarse</button>
+    <div>
+      ¿Ya tienes cuenta? <a (click)="irALogin()" class="link">Inicia sesión</a>
+    </div>
+  </form>
+</div>
