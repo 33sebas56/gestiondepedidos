@@ -18,31 +18,40 @@ export class PerfilComponent implements OnInit {
     comentario: '',
     email: '',
   };
+  usuarioActualEmail = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
+    // Cargar el email del usuario actual desde AuthService
     const usuarioActual = this.authService.obtenerUsuarioActual();
     if (usuarioActual) {
-      // Cargar datos del perfil según el usuario actual
-      const perfilGuardado = localStorage.getItem(`perfil-${usuarioActual.username}`);
-      if (perfilGuardado) {
-        this.trabajador = JSON.parse(perfilGuardado);
-      } else {
-        // Inicializar perfil vacío
-        this.trabajador.email = usuarioActual.username;
+      this.usuarioActualEmail = usuarioActual.username;
+
+      // Intentar cargar los datos actuales del perfil
+      const usuarioData = localStorage.getItem(`perfil-${this.usuarioActualEmail}`);
+      if (usuarioData) {
+        this.trabajador = JSON.parse(usuarioData);
       }
     } else {
-      alert('No hay usuario autenticado');
+      alert('No se encontró un usuario activo.');
+      this.router.navigate(['/login']);
     }
   }
 
   guardarCambios() {
-    const usuarioActual = this.authService.obtenerUsuarioActual();
-    if (usuarioActual) {
-      // Guardar el perfil en localStorage usando la clave única del usuario
-      localStorage.setItem(`perfil-${usuarioActual.username}`, JSON.stringify(this.trabajador));
-      alert('Perfil actualizado correctamente');
+    if (this.usuarioActualEmail) {
+      // Guardar los cambios del perfil en localStorage
+      localStorage.setItem(`perfil-${this.usuarioActualEmail}`, JSON.stringify(this.trabajador));
+      alert('Cambios guardados correctamente.');
+      this.router.navigate(['/trabajador']); // Redirigir al componente Trabajador
+    } else {
+      alert('No se pudo guardar el perfil. Intenta nuevamente.');
     }
   }
+
+  volver() {
+    this.router.navigate(['/trabajador']); // Redirige al componente Trabajador
+  }
+  
 }

@@ -1,1 +1,24 @@
-<p>user works!</p>
+<div class="menu-header">
+    <button class="menu-boton" (click)="toggleMenu()">☰</button>
+    <div class="menu-opciones" *ngIf="mostrarMenu">
+      <ul>
+        <li><button (click)="irAPedidos()">Pedidos</button></li>
+        <li><button (click)="irAHistorialPedidos()">Historial de pedidos</button></li>
+      </ul>
+    </div>
+  </div>
+
+
+  
+<div class="user-container">
+    <h2>Bienvenido, {{ usuario.nombre }}</h2>
+    <p>Email: {{ usuario.email }}</p>
+    <p>Teléfono: {{ usuario.telefono }}</p>
+    <p>Dirección: {{ usuario.direccion }}</p>
+  </div>
+
+  <div class="acciones">
+    <button (click)="irAEditarPerfil()">Editar Perfil</button>
+
+    <button (click)="cerrarSesion()">Cerrar Sesión</button>
+  </div>

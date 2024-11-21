@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
 
-// Interfaz Usuario para definir la estructura de los datos del usuario
 interface Usuario {
   username: string;
   password: string;
-  role: string; // Tipo de usuario (ejemplo: usuario o trabajador)
+  role: string;
+  nombre?: string;
+  profesion?: string;
+  edad?: number | null; // Asegúrate de incluir `null` aquí
+  comentario?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private usuarios: Usuario[] = []; // Declara la propiedad usuarios
-  private usuariosKey = 'usuarios'; // Clave para guardar usuarios en localStorage
-  private usuarioActualKey = 'usuarioActual'; // Clave para guardar al usuario actual
+  private usuariosKey = 'usuarios';
+  private usuarioActualKey = 'usuarioActual';
+  private usuarios: Usuario[] = [];
 
   constructor() {
-    // Inicializa `usuarios` desde localStorage si existe
     const usuariosGuardados = localStorage.getItem(this.usuariosKey);
     this.usuarios = usuariosGuardados ? JSON.parse(usuariosGuardados) : [];
   }
@@ -24,15 +26,14 @@ export class AuthService {
   registrarUsuario(username: string, password: string, role: string): boolean {
     const usuarioExistente = this.usuarios.find((user) => user.username === username);
     if (usuarioExistente) {
-      return false; // El usuario ya existe
+      return false;
     }
 
     const nuevoUsuario: Usuario = { username, password, role };
     this.usuarios.push(nuevoUsuario);
 
-    // Guardar en localStorage
     localStorage.setItem(this.usuariosKey, JSON.stringify(this.usuarios));
-    return true; // Registro exitoso
+    return true;
   }
 
   autenticarUsuario(username: string, password: string): Usuario | null {
@@ -40,11 +41,10 @@ export class AuthService {
       (user) => user.username === username && user.password === password
     );
     if (usuario) {
-      // Guardar al usuario actual en localStorage
       localStorage.setItem(this.usuarioActualKey, JSON.stringify(usuario));
       return usuario;
     }
-    return null; // Usuario no encontrado
+    return null;
   }
 
   obtenerUsuarioActual(): Usuario | null {
@@ -52,14 +52,17 @@ export class AuthService {
     return usuarioActual ? JSON.parse(usuarioActual) : null;
   }
 
-  cerrarSesion(): void {
-    // Eliminar al usuario actual de localStorage
-    localStorage.removeItem(this.usuarioActualKey);
+  actualizarUsuarioActual(usuarioActualizado: Usuario): void {
+    const index = this.usuarios.findIndex((user) => user.username === usuarioActualizado.username);
+
+    if (index !== -1) {
+      this.usuarios[index] = usuarioActualizado;
+      localStorage.setItem(this.usuariosKey, JSON.stringify(this.usuarios));
+      localStorage.setItem(this.usuarioActualKey, JSON.stringify(usuarioActualizado));
+    }
   }
 
-  // Método opcional para obtener todos los usuarios (útil para debugging o administración)
-  obtenerUsuarios(): Usuario[] {
-    return this.usuarios;
+  cerrarSesion(): void {
+    localStorage.removeItem(this.usuarioActualKey);
   }
 }
-  

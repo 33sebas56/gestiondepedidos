@@ -4,12 +4,13 @@ import { LoginComponent } from './views/login/login.component';
 import { RegistroComponent } from './views/registro/registro.component';
 import { PedidosComponent } from './views/pedidos/pedidos.component';
 import { TrabajadorComponent } from './views/trabajador/trabajador.component';
-import { UserComponent } from './views/user/user.component';
 import { Routes } from '@angular/router';
 import { HistorialPedidosComponent } from './views/historial-pedidos/historial-pedidos.component';
-import { ListadoPedidosComponent } from './views/listado-pedidos/listado-pedidos.component';
 import { MenuComponent } from './views/menu/menu.component';
 import { PerfilComponent } from './views/trabajador/perfil/perfil.component';
+import { UserComponent } from './views/user/user.component';
+import { EditarUserComponent } from './views/user/editar-user/editar-user.component';
+import { ListaPedidosComponent } from './views/listado-pedidos/listado-pedidos.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,11 +18,12 @@ export const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'pedidos', component: PedidosComponent },
   { path: 'trabajador', component: TrabajadorComponent },
-  { path: 'listadoPedidos', component: ListadoPedidosComponent},
+  { path: 'listadoPedidos', component: ListaPedidosComponent},
   { path: 'historialPedidos', component: HistorialPedidosComponent},
   { path: 'menu', component: MenuComponent},
   { path: 'user', component: UserComponent},
-  { path: "editar-perfil", component: PerfilComponent}
+  { path: "editar-perfil", component: PerfilComponent},
+  { path: "editar-user", component: EditarUserComponent}
 ];
 
 @NgModule({

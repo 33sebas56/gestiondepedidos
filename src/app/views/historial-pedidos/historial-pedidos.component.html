@@ -1,1 +1,8 @@
-<p>historial-pedidos works!</p>
+<div class="historial-pedidos">
+  <h2>Historial de Pedidos</h2>
+  <ul>
+    <li *ngFor="let pedido of pedidosUsuario">
+      <strong>{{ pedido.nombre }}</strong> - {{ pedido.descripcion }} 
+    </li>
+  </ul>
+</div>
